@@ -16,6 +16,38 @@ const routes = [
       requiresAuth: true
     }
   },
+/*   {
+    path: "/users",
+    name: "users",
+    component: Users,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: "/forms",
+    name: "forms",
+    component: Forms,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: "/reports",
+    name: "reports",
+    component: Reports,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: "/settings",
+    name: "settings",
+    component: Settings,
+    meta: {
+      requiresAuth: true
+    }
+  }, */
   {
     path: "/login",
     name: "login",

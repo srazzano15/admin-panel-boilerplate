@@ -2,7 +2,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 //import Auth from "@/plugins/firebase/auth";
-//import Database from "@/plugins/firebase/database";
+import Database from "@/plugins/firebase/database";
 import axios from "axios";
 import router from "@/router/index";
 import Cookies from "js-cookie";
@@ -16,7 +16,8 @@ export default new Vuex.Store({
       idToken: "",
       refreshToken: "",
       expiresIn: "",
-      localId: ""
+      localId: "",
+      name: ""
     }
   },
   mutations: {
@@ -26,6 +27,9 @@ export default new Vuex.Store({
         (state.user.localId = payload.localId),
         (state.user.refreshToken = payload.refreshToken),
         (state.user.expiresIn = payload.expiresIn);
+    },
+    storeUserMeta: (state, payload) => {
+      state.user.name = payload.name
     }
   },
   actions: {
@@ -48,8 +52,20 @@ export default new Vuex.Store({
             expiresIn: res.data.expiresIn
           });
           Cookies.set("token", res.data.refreshToken);
+          localStorage.setItem('user', JSON.stringify(res.data))
+
           router.push("/");
         });
+    },
+    getUserMeta({ commit, state }, payload) {
+      return (
+        Database
+          .collection('admins')
+          .doc(state.user.localId)
+          .get()
+          .then( commit('storeUserMeta', payload.name) )
+        )
+
     }
   },
   getters: {
